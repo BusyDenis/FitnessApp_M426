@@ -1,0 +1,10 @@
+@import "tailwindcss";
+
+/* Base defaults */
+html, body, #root {
+  height: 100%;
+}
+
+body {
+  @apply bg-gray-50 text-slate-800;
+}

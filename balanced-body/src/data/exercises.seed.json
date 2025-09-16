@@ -1,0 +1,45 @@
+[
+  {"id":"pushup","name":"Push-Up","primary":["chest"],"secondary":["triceps","shoulders"],"equipment":["bodyweight"],"difficulty":"easy","instructions":"Körper in Linie halten, Brust zum Boden senken und hochdrücken."},
+  {"id":"bench_press","name":"Bench Press","primary":["chest"],"secondary":["triceps","shoulders"],"equipment":["barbell","bench"],"difficulty":"med","instructions":"Langhantel zur Brust führen und kontrolliert nach oben drücken."},
+  {"id":"incline_db_press","name":"Incline Dumbbell Press","primary":["chest"],"secondary":["triceps","shoulders"],"equipment":["dumbbell","bench"],"difficulty":"med","instructions":"Kurzhanteln schräg drücken, Ellenbogen stabil halten."},
+  {"id":"cable_fly","name":"Cable Fly","primary":["chest"],"secondary":["shoulders"],"equipment":["cable"],"difficulty":"easy","instructions":"Arme leicht gebeugt zusammenführen, Brust anspannen."},
+
+  {"id":"pullup","name":"Pull-Up","primary":["back"],"secondary":["biceps"],"equipment":["bar"],"difficulty":"hard","instructions":"Übergriff, Kinn über die Stange ziehen, kontrolliert ablassen."},
+  {"id":"barbell_row","name":"Barbell Row","primary":["back"],"secondary":["biceps"],"equipment":["barbell"],"difficulty":"med","instructions":"Rücken gerade, Hantel zur Hüfte ziehen."},
+  {"id":"lat_pulldown","name":"Lat Pulldown","primary":["back"],"secondary":["biceps"],"equipment":["machine"],"difficulty":"easy","instructions":"Stange zur Brust ziehen, Schulterblätter zusammen."},
+  {"id":"seated_cable_row","name":"Seated Cable Row","primary":["back"],"secondary":["biceps"],"equipment":["cable"],"difficulty":"easy","instructions":"Gerader Rücken, Griff zum Bauch ziehen."},
+
+  {"id":"back_squat","name":"Back Squat","primary":["quads","glutes"],"secondary":["hamstrings"],"equipment":["barbell"],"difficulty":"hard","instructions":"Tief in die Knie, Rücken neutral, Fersen am Boden."},
+  {"id":"front_squat","name":"Front Squat","primary":["quads"],"secondary":["core"],"equipment":["barbell"],"difficulty":"hard","instructions":"Ellenbogen hoch, Brust stolz, tief beugen."},
+  {"id":"leg_press","name":"Leg Press","primary":["quads","glutes"],"secondary":["hamstrings"],"equipment":["machine"],"difficulty":"easy","instructions":"Plattform kontrolliert bewegen, Knie verfolgen Zehen."},
+  {"id":"lunge","name":"Lunge","primary":["quads","glutes"],"secondary":["hamstrings"],"equipment":["bodyweight","dumbbell"],"difficulty":"easy","instructions":"Ausfallschritt, vorderes Knie über dem Knöchel."},
+
+  {"id":"rdl","name":"Romanian Deadlift","primary":["hamstrings"],"secondary":["glutes","back"],"equipment":["barbell","dumbbell"],"difficulty":"med","instructions":"Hüftscharnier, Rücken neutral, Hantel nah am Körper."},
+  {"id":"leg_curl","name":"Leg Curl","primary":["hamstrings"],"secondary":["calves"],"equipment":["machine"],"difficulty":"easy","instructions":"Fersen Richtung Gesäß ziehen, kontrolliert senken."},
+  {"id":"good_morning","name":"Good Morning","primary":["hamstrings"],"secondary":["glutes","back"],"equipment":["barbell"],"difficulty":"med","instructions":"Hüfte nach hinten, Rücken gerade."},
+
+  {"id":"hip_thrust","name":"Hip Thrust","primary":["glutes"],"secondary":["hamstrings"],"equipment":["barbell","bench"],"difficulty":"med","instructions":"Becken anheben, oben Gesäß anspannen."},
+  {"id":"glute_bridge","name":"Glute Bridge","primary":["glutes"],"secondary":["hamstrings"],"equipment":["bodyweight"],"difficulty":"easy","instructions":"Becken heben, neutraler Rücken."},
+  {"id":"bulgarian_split_squat","name":"Bulgarian Split Squat","primary":["glutes","quads"],"secondary":["hamstrings"],"equipment":["dumbbell","bench"],"difficulty":"hard","instructions":"Hinten erhöhter Fuß, aufrecht bleiben."},
+
+  {"id":"ohp","name":"Overhead Press","primary":["shoulders"],"secondary":["triceps"],"equipment":["barbell","dumbbell"],"difficulty":"med","instructions":"Über Kopf drücken, Rumpf fest."},
+  {"id":"lateral_raise","name":"Lateral Raise","primary":["shoulders"],"secondary":["traps"],"equipment":["dumbbell"],"difficulty":"easy","instructions":"Arme seitlich anheben, Schultern unten."},
+  {"id":"face_pull","name":"Face Pull","primary":["shoulders"],"secondary":["back"],"equipment":["cable"],"difficulty":"easy","instructions":"Seil zum Gesicht ziehen, Außenrotation."},
+
+  {"id":"barbell_curl","name":"Barbell Curl","primary":["biceps"],"secondary":["forearms"],"equipment":["barbell"],"difficulty":"easy","instructions":"Ellbogen stabil, sauber curlen."},
+  {"id":"db_curl","name":"Dumbbell Curl","primary":["biceps"],"secondary":["forearms"],"equipment":["dumbbell"],"difficulty":"easy","instructions":"Abwechselnd curlen, kein Schwung."},
+  {"id":"chinup","name":"Chin-Up","primary":["biceps","back"],"secondary":["forearms"],"equipment":["bar"],"difficulty":"hard","instructions":"Untergriff, Kinn über die Stange."},
+
+  {"id":"triceps_pushdown","name":"Triceps Pushdown","primary":["triceps"],"secondary":["shoulders"],"equipment":["cable"],"difficulty":"easy","instructions":"Ellenbogen am Körper, komplett strecken."},
+  {"id":"skullcrusher","name":"Skullcrusher","primary":["triceps"],"secondary":["chest"],"equipment":["barbell","dumbbell"],"difficulty":"med","instructions":"Arme beugen/strecken, Oberarme stabil."},
+  {"id":"dip","name":"Dip","primary":["triceps","chest"],"secondary":["shoulders"],"equipment":["bars"],"difficulty":"hard","instructions":"Körper aufrecht, Ellenbogen beugen und strecken."},
+
+  {"id":"calf_raise","name":"Standing Calf Raise","primary":["calves"],"secondary":["hamstrings"],"equipment":["machine","dumbbell"],"difficulty":"easy","instructions":"Fersen heben/senken, volle ROM."},
+  {"id":"seated_calf","name":"Seated Calf Raise","primary":["calves"],"secondary":["hamstrings"],"equipment":["machine"],"difficulty":"easy","instructions":"Sitzend Waden anheben."},
+
+  {"id":"plank","name":"Plank","primary":["abs"],"secondary":["core"],"equipment":["bodyweight"],"difficulty":"easy","instructions":"Körper in Linie, Spannung halten."},
+  {"id":"crunch","name":"Crunch","primary":["abs"],"secondary":["core"],"equipment":["bodyweight"],"difficulty":"easy","instructions":"Brust Richtung Becken, kontrolliert."},
+  {"id":"hanging_leg_raise","name":"Hanging Leg Raise","primary":["abs"],"secondary":["hip flexors"],"equipment":["bar"],"difficulty":"hard","instructions":"Beine anheben ohne Schwung."}
+]
+
+
