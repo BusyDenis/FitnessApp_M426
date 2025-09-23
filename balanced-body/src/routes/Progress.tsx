@@ -19,6 +19,7 @@ export default function Progress() {
     return { label: weekLabel(ws), total }
   })
 
+  // CSV export — In Arbeit: keep handler but disable UI to reflect status
   function exportCsv() {
     const exIndex = indexExercisesById(state.exercises)
     const csv = logsToCsv(state.logs, exIndex)

@@ -1,7 +1,7 @@
 import { useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
-import { useStore, type Exercise, type LogEntry } from '../state/store'
-import { setJSON, getJSON } from '../lib/storage'
+import { useStore, type LogEntry } from '../state/store'
+// storage utils not used here; persistence is handled in reducer
 
 function useQuery() {
   const { search } = useLocation()
@@ -24,8 +24,10 @@ export default function Log() {
 
   function save() {
     if (!exerciseId) return
-    const ex = state.exercises.find((e) => e.id === exerciseId) as Exercise
-    const credits = [
+    const ex = state.exercises.find((e) => e.id === exerciseId)
+    if (!ex) return
+    // implementierte Credits-Regel: Primär volle Sets, Sekundär 0.5x
+    const credits: { muscle: string; sets: number }[] = [
       ...ex.primary.map((m) => ({ muscle: m, sets: sets.length })),
       ...ex.secondary.map((m) => ({ muscle: m, sets: sets.length * 0.5 })),
     ]
@@ -36,10 +38,8 @@ export default function Log() {
       sets,
       credits,
     }
-    // persist in store via reducer and localStorage already in reducer
+    // Persist via reducer (single source). Duplicate direct writes removed.
     dispatch({ type: 'ADD_LOG', log })
-    const existing = getJSON<LogEntry[]>('bb_logs', [])
-    setJSON('bb_logs', [...existing, log])
     alert('Gespeichert')
   }
 
@@ -58,7 +58,7 @@ export default function Log() {
         <div className="text-sm mt-2">Sets</div>
         <div className="space-y-2">
           {sets.map((s, i) => (
-            <div key={i} className="flex items-center gap-2">
+            <div key={`${s.reps}-${s.weightKg}-${i}`} className="flex items-center gap-2">
               <input type="number" className="border rounded px-2 py-1 w-24" value={s.reps} min={1} onChange={(e) => setSets((prev) => prev.map((p, idx) => idx === i ? { ...p, reps: Number(e.target.value) } : p))} />
               <input type="number" className="border rounded px-2 py-1 w-28" value={s.weightKg} min={0} step={0.5} onChange={(e) => setSets((prev) => prev.map((p, idx) => idx === i ? { ...p, weightKg: Number(e.target.value) } : p))} />
               <button className="text-xs text-red-600" onClick={() => removeSet(i)}>Entfernen</button>

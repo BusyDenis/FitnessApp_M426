@@ -1,0 +1,85 @@
+Issue Id,Project Key,Issue Type,Summary,Description,Status,Assignee,Labels,Parent Id
+100,FA,Task,Init Project,"Bootstrap Vite + React + TS; set up ESLint/Prettier; configure tsconfig.",Done,Ramadan,frontend,
+101,FA,Sub-task,Create Vite app,"Initialize project scaffold with Vite+React+TS.",Done,Ramadan,frontend,100
+102,FA,Sub-task,Configure tooling,"Add ESLint, Prettier, TypeScript config.",Done,Ramadan,frontend,100
+
+110,FA,Task,Layout.tsx,"Create top nav with NavLink, add Outlet and footer.",Done,Ramadan,frontend,
+111,FA,Sub-task,Build navigation,"Implement header with links and active styles.",Done,Ramadan,frontend,110
+112,FA,Sub-task,Main shell,"Add <Outlet/> area and footer.",Done,Ramadan,frontend,110
+
+120,FA,Task,Create Routing,"Define routes for Dashboard, Exercises, ExerciseDetail, Log, Progress and wire into App.",To Do,Ramadan,frontend,
+121,FA,Sub-task,Define route table,"Add <Routes> and nested <Route> in App.tsx.",To Do,Ramadan,frontend,120
+122,FA,Sub-task,Hook links in layout,"Connect Layout links to routes.",To Do,Ramadan,frontend,120
+
+130,FA,Task,Wire App Shell,"Mount app with BrowserRouter and StoreProvider.",In Progress,Ramadan,frontend,
+131,FA,Sub-task,Router provider,"Wrap app in <BrowserRouter>.",In Progress,Ramadan,frontend,130
+132,FA,Sub-task,Store provider,"Provide global store context.",In Progress,Ramadan,frontend,130
+
+200,FA,Task,Implement global store,"Create types, reducer (INIT_SEED, SET_LOGS, ADD_LOG), context provider.",In Progress,Denis,frontend,
+201,FA,Sub-task,Define types,"Exercise, LogEntry, SetEntry and State.",In Progress,Denis,frontend,200
+202,FA,Sub-task,Reducer actions,"Implement INIT_SEED, SET_LOGS, ADD_LOG with persistence.",In Progress,Denis,frontend,200
+
+210,FA,Task,Persist logs in localStorage,"Load bb_logs on boot; write on ADD_LOG.",Done,Denis,frontend,
+211,FA,Sub-task,Load on boot,"useEffect to hydrate logs from storage.",Done,Denis,frontend,210
+212,FA,Sub-task,Save on change,"Write to storage inside reducer.",Done,Denis,frontend,210
+
+220,FA,Task,Selectors for muscles and logs,"indexExercisesById, getAllMuscles, logsByExercise.",To Do,Denis,frontend,
+221,FA,Sub-task,Muscles list,"Collect unique muscles sorted alphabetically.",To Do,Denis,frontend,220
+222,FA,Sub-task,Logs grouping,"Group logs by exerciseId.",To Do,Denis,frontend,220
+
+300,FA,Task,Exercises page,"Seed init, persist bb_exercises, filter by muscle/equipment/difficulty.",In Progress,Gino,frontend,
+301,FA,Sub-task,Load seed,"Import seed and write to storage if empty.",In Progress,Gino,frontend,300
+302,FA,Sub-task,Filter logic,"Memoized filter across state.exercises.",In Progress,Gino,frontend,300
+
+310,FA,Task,ExerciseCard component,"Display name, muscles, equipment chips; link to detail.",To Do,Gino,frontend,
+311,FA,Sub-task,Card layout,"Create responsive card with tags.",To Do,Gino,frontend,310
+312,FA,Sub-task,Routing link,"Link card to /exercises/:id.",To Do,Gino,frontend,310
+
+320,FA,Task,ExerciseDetail page,"Show details and link to quick logging.",Done,Gino,frontend,
+321,FA,Sub-task,Render details,"Primary/secondary muscles, equipment, instructions.",Done,Gino,frontend,320
+322,FA,Sub-task,Log link,"Deep link to /log?exerciseId=...",Done,Gino,frontend,320
+
+400,FA,Task,Quick Log page,"Implement quick logging UI to select exercise, manage dynamic sets, validate input, and persist via store. Support deep-link preselection (?exerciseId=...). AC: User can add/remove sets; inputs constrained (reps>=1, weight>=0, step=0.5); Save enabled only when exercise selected and >=1 set; On save: entry appears in store & localStorage; success feedback shown.",In Progress,Jan,frontend,
+401,FA,Sub-task,Dynamic sets,"Build list UI for sets with number inputs (reps, weightKg). Defaults {reps:8, weightKg:20}. Actions: add row, remove row. Validation: reps integer>=1; weightKg>=0 step 0.5. AC: Updating inputs updates state; removing deletes the correct row; keyboard interaction works.",In Progress,Jan,frontend,400
+402,FA,Sub-task,Save handler,"Create save() to assemble LogEntry {id, dateISO, exerciseId, sets, credits}. Dispatch ADD_LOG and persist to localStorage. Disable while invalid. AC: After save, entry exists in store and storage; form resets or success message is shown; no duplicate writes.",In Progress,Jan,frontend,400
+
+410,FA,Task,Credits calculation,"Define rules: for each primary muscle add full count of sets; for each secondary muscle add 0.5x sets (decimals allowed). AC: Given 3 sets with 2 primary and 1 secondary muscle -> credits [p1:3, p2:3, s1:1.5]; output is stable and typed.",To Do,Jan,frontend,
+411,FA,Sub-task,Implement rules,"Implement computeCredits(exercise, setsCount) returning [{muscle, sets}]. AC: Works when there are zero secondary muscles; stable order; types align with LogEntry. Reuse in save flow.",To Do,Jan,frontend,410
+412,FA,Sub-task,Edge cases,"Block save or show validation when sets array empty, invalid numbers present, or unknown exerciseId. AC: No write to storage on invalid state; clear user feedback; unit/console checks pass.",To Do,Jan,frontend,410
+
+420,FA,Task,Integrate log persistence,"Ensure reducer persists logs to key bb_logs and hydration occurs on app start. AC: Refresh retains logs; no duplicate entries; write happens only in ADD_LOG branch.",Done,Jan,frontend,
+421,FA,Sub-task,Reducer write,"In reducer ADD_LOG: append immutably and call setJSON('bb_logs', logs). AC: localStorage contains serialized log; errors handled gracefully; UI remains responsive.",Done,Jan,frontend,420
+422,FA,Sub-task,Hydration,"In StoreProvider useEffect: read bb_logs once and dispatch SET_LOGS. AC: Logs available before dashboard charts render; no rehydration loops.",Done,Jan,frontend,420
+
+500,FA,Task,Dashboard weekly sets chart,"Aggregate weekly sets and show bar chart; undertrained chips.",Done,Moreno,frontend,
+501,FA,Sub-task,Aggregation,"Use aggregateWeeklySets for current week.",Done,Moreno,frontend,500
+502,FA,Sub-task,UI chart,"Render Recharts BarChart with axes and tooltip.",Done,Moreno,frontend,500
+
+510,FA,Task,Progress charts and CSV export,"Weekly totals line chart; export CSV of logs.",In Progress,Moreno,frontend,
+511,FA,Sub-task,Line chart,"6-week trend using lastNWeeksStartDates and weekLabel.",In Progress,Moreno,frontend,510
+512,FA,Sub-task,CSV export,"Use logsToCsv + downloadCsv with exercise index.",In Progress,Moreno,frontend,510
+
+520,FA,Task,CSV utilities,"Implement logsToCsv and downloadCsv.",Done,Moreno,frontend,
+521,FA,Sub-task,CSV rows,"Aggregate sets, reps, avg weight, credits JSON.",Done,Moreno,frontend,520
+522,FA,Sub-task,Download helper,"Blob + ObjectURL + anchor click.",Done,Moreno,frontend,520
+
+600,FA,Task,Date utilities,"Implement getWeekStart, isSameWeek, toISODate, weekLabel.",Done,Nicola,frontend,
+601,FA,Sub-task,Week math,"Compute Monday week start and comparisons.",Done,Nicola,frontend,600
+602,FA,Sub-task,Labels,"Format week label start–end.",Done,Nicola,frontend,600
+
+610,FA,Task,Balance logic,"Compute weekly muscle set aggregation; under/over flags.",In Progress,Nicola,frontend,
+611,FA,Sub-task,Aggregate,"Sum credits per muscle for a week.",In Progress,Nicola,frontend,610
+612,FA,Sub-task,Thresholds,"findUndertrained and findOveremphasized helpers.",In Progress,Nicola,frontend,610
+
+620,FA,Task,Planner suggestions,"Suggest exercises for undertrained muscles, optional equipment filter.",To Do,Nicola,frontend,
+621,FA,Sub-task,Filter candidates,"Match primary/secondary and top-2 pick.",To Do,Nicola,frontend,620
+622,FA,Sub-task,Equipment filter,"Optional narrowing by equipment type.",To Do,Nicola,frontend,620
+
+700,FA,Task,Create Jira,"Create project 'FA' and initial board with columns To Do, In Arbeit, Fertig; enable Task and Sub-task issue types. AC: Team sees project and board; CSV import works.",Done,Jan,management,
+701,FA,Sub-task,Project setup,"Create Jira software project (key FA) and Kanban/Scrum board; configure workflow/status mapping for To Do/In Progress/Done; set issue types Task/Sub-task. AC: New issues appear on board in correct columns.",Done,Jan,management,700
+702,FA,Sub-task,Permissions,"Add team members (Ramadan, Denis, Gino, Jan, Moreno, Nicola) with appropriate roles and assignable permissions. AC: Members can create/edit issues; assignee field suggests team.",Done,Jan,management,700
+
+710,FA,Task,Jenkins Pipeline,"CI pipeline for build and lint on PRs.",In Progress,Nicola,devops,
+711,FA,Sub-task,Build step,"Install deps, run typecheck and build.",In Progress,Nicola,devops,710
+712,FA,Sub-task,Lint step,"Run ESLint with CI-friendly output.",In Progress,Nicola,devops,710
+
