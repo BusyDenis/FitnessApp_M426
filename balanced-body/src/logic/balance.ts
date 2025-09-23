@@ -14,6 +14,18 @@ export function aggregateWeeklySets(logs: LogEntry[], weekStart?: Date): Record<
   return agg
 }
 
+export function getWeeklyTrainingDays(logs: LogEntry[], weekStart?: Date): number {
+  const week = weekStart ? getWeekStart(weekStart) : getWeekStart(new Date())
+  const uniqueDays = new Set<string>()
+  for (const log of logs) {
+    const d = new Date(log.dateISO)
+    if (isSameWeek(d, week)) {
+      uniqueDays.add(log.dateISO.split('T')[0])
+    }
+  }
+  return uniqueDays.size
+}
+
 export function findUndertrained(agg: Record<string, number>, min = 8): string[] {
   return Object.entries(agg)
     .filter(([, count]) => count < min)
