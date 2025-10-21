@@ -1,3 +1,4 @@
+import type { ReactNode } from 'react'
 import {
     Dashboard,
     Exercises,
@@ -10,7 +11,7 @@ import {
 export type AppRoute = {
     index?: boolean
     path?: string
-    element: JSX.Element
+    element: ReactNode
     label?: string
     inNav?: boolean
 }
