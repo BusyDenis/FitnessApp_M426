@@ -1,17 +1,20 @@
 import { Route, Routes } from 'react-router-dom'
 import Layout from './components/Layout'
-import { Dashboard, Exercises, ExerciseDetail, Log, Progress, CreateRoutine } from './routes'
+import { routeTable, notFoundRoute } from './routes/routeTable'
 
 export default function App() {
     return (
         <Routes>
             <Route element={<Layout />}>
-                <Route index element={<Dashboard />} />
-                <Route path="exercises" element={<Exercises />} />
-                <Route path="exercises/:id" element={<ExerciseDetail />} />
-                <Route path="log" element={<Log />} />
-                <Route path="progress" element={<Progress />} />
-                <Route path="routines/create" element={<CreateRoutine />} />
+                {routeTable.map((r) =>
+                    r.index ? (
+                        <Route index element={r.element} key="__index" />
+                    ) : (
+                        <Route path={r.path!} element={r.element} key={r.path} />
+                    )
+                )}
+                {/* Fallback für unbekannte URLs */}
+                <Route path={notFoundRoute.path!} element={notFoundRoute.element} />
             </Route>
         </Routes>
     )
