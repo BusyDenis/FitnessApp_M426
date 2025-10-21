@@ -13,7 +13,6 @@ export default function App() {
                         <Route path={r.path!} element={r.element} key={r.path} />
                     )
                 )}
-                {/* Fallback für unbekannte URLs */}
                 <Route path={notFoundRoute.path!} element={notFoundRoute.element} />
             </Route>
         </Routes>
