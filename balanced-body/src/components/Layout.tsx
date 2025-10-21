@@ -11,6 +11,12 @@ export default function Layout() {
             <NavLink to="/exercises" className={({isActive}) => isActive ? 'text-blue-600' : 'text-slate-600'}>Exercises</NavLink>
             <NavLink to="/log" className={({isActive}) => isActive ? 'text-blue-600' : 'text-slate-600'}>Log</NavLink>
             <NavLink to="/progress" className={({isActive}) => isActive ? 'text-blue-600' : 'text-slate-600'}>Progress</NavLink>
+              <NavLink
+                  to="/routines/create"
+                  className={({ isActive }) => (isActive ? 'text-blue-600' : 'text-slate-600')}
+              >
+                  Routines
+              </NavLink>
           </div>
         </div>
       </nav>
