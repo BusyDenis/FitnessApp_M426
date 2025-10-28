@@ -3,5 +3,4 @@ export { default as Exercises } from './Exercises'
 export { default as ExerciseDetail } from './ExerciseDetail'
 export { default as Log } from './Log'
 export { default as Progress } from './Progress'
-
-
+export { default as CreateRoutine } from './CreateRoutine'
