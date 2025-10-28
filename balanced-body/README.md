@@ -1,6 +1,6 @@
-# BalancedBody Coach — Schüler-MVP
+# BalancedBody Coach — Fitness Tracking App
 
-Lauffähige, lokale React‑Webapp (kein Login, kein Backend). Daten bleiben im Browser (`localStorage`).
+Moderne React‑Webapp mit Backend-Integration. Benutzer können sich registrieren, anmelden und ihre Trainingsdaten verwalten.
 
 ## Setup
 
@@ -52,10 +52,26 @@ src/
 - Exercise: `{ id, name, primary[], secondary[], equipment[], difficulty, instructions }`
 - LogEntry: `{ id, dateISO, exerciseId, sets[{reps,weightKg}], credits[{muscle,sets}] }`
 
-## Persistenz (localStorage)
+## Backend Integration
 
-- `bb_exercises`: Seed‑Übungen (beim ersten Start geladen)
-- `bb_logs`: Trainingslogs
+- **API**: Alle Daten werden im Backend gespeichert
+- **Authentication**: Login/Registrierung mit Benutzername und Passwort
+- **Übungen**: Werden aus der Datenbank geladen
+- **Logs**: Pro Benutzer in der Datenbank gespeichert
+
+### Backend Setup
+
+Das Backend muss separat gestartet werden:
+
+```bash
+cd backend
+npm install
+npm run seed  # Übungen in DB laden
+npm run dev   # Server starten (Port 3001)
+```
+
+Das Frontend erwartet das Backend standardmäßig auf `http://localhost:3001`. 
+Dies kann über `.env` mit `VITE_API_URL` angepasst werden.
 
 ## Features (MVP)
 
@@ -69,8 +85,16 @@ src/
 
 Tailwind v4 via PostCSS Plugin `@tailwindcss/postcss`. Basisklassen sind in `src/index.css` importiert.
 
+## Features
+
+- ✅ **Authentifizierung**: Registrierung und Login mit Benutzername/Passwort
+- ✅ **Protected Routes**: Nur eingeloggte Benutzer können die App nutzen
+- ✅ **Backend-Integration**: Alle Daten werden im Backend gespeichert
+- ✅ **Modern UI**: Fitness-Themed Design mit Bildern
+- ✅ **Responsive**: Funktioniert auf Desktop und Mobile
+
 ## Hinweise zur Erweiterung
 
-- Auth/Backend können später ergänzt werden (APIs statt localStorage)
 - PWA/Offline: Workbox/Service Worker hinzufügen
 - Tests: React Testing Library/Jest optional
+- Production Deploy: Backend + Frontend zusammen deployen

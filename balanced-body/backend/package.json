@@ -1,0 +1,32 @@
+{
+  "name": "balanced-body-backend",
+  "version": "1.0.0",
+  "description": "Backend API for BalancedBody Fitness App",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "seed": "tsx src/scripts/seed.ts"
+  },
+  "keywords": ["fitness", "api", "express"],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.1",
+    "cors": "^2.8.5",
+    "better-sqlite3": "^11.7.0",
+    "bcryptjs": "^2.4.3"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0",
+    "@types/cors": "^2.8.17",
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/bcryptjs": "^2.4.6",
+    "@types/node": "^22.10.2",
+    "tsx": "^4.19.2",
+    "typescript": "^5.8.3"
+  }
+}
+

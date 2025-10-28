@@ -9,11 +9,15 @@ export function indexExercisesById(exercises: Exercise[]): Record<string, Exerci
 
 export function getAllMuscles(exercises: Exercise[]): string[] {
   const set = new Set<string>()
-  exercises.forEach((e) => {
-    e.primary.forEach((m) => set.add(m))
-    e.secondary.forEach((m) => set.add(m))
-  })
-  return Array.from(set).sort()
+  for (const e of exercises) {
+    for (const m of e.primary) {
+      set.add(m)
+    }
+    for (const m of e.secondary) {
+      set.add(m)
+    }
+  }
+  return Array.from(set).sort((a, b) => a.localeCompare(b))
 }
 
 export function logsByExercise(logs: LogEntry[]): Record<string, LogEntry[]> {
