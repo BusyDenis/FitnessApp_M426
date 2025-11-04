@@ -10,14 +10,18 @@ export default function Exercises() {
 
   const muscles = useMemo(() => getAllMuscles(state.exercises), [state.exercises])
 
-  const list = useMemo(() => {
-    return state.exercises.filter((e) => {
-      if (filter.muscle && !(e.primary.includes(filter.muscle) || e.secondary.includes(filter.muscle))) return false
-      if (filter.equipment && !e.equipment.includes(filter.equipment)) return false
-      if (filter.difficulty && e.difficulty !== filter.difficulty as any) return false
-      return true
-    })
-  }, [state.exercises, filter])
+const list = useMemo(() => {
+  return state.exercises.filter((e) => {
+    const primary = typeof e.primary === 'string' ? JSON.parse(e.primary) : e.primary
+    const secondary = typeof e.secondary === 'string' ? JSON.parse(e.secondary) : e.secondary
+    const equipment = typeof e.equipment === 'string' ? JSON.parse(e.equipment) : e.equipment
+
+    if (filter.muscle && !(primary.includes(filter.muscle) || secondary.includes(filter.muscle))) return false
+    if (filter.equipment && !equipment.includes(filter.equipment)) return false
+    if (filter.difficulty && e.difficulty !== filter.difficulty) return false
+    return true
+  })
+}, [state.exercises, filter])
 
   return (
     <div className="space-y-6 fade-in">
