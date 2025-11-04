@@ -1,5 +1,5 @@
-import { createContext, useContext, useEffect, useMemo, useReducer } from 'react'
-import { getJSON, setJSON } from '../lib/storage'
+import { createContext, useContext, useEffect, useMemo, useReducer, useState } from 'react'
+import { getExercises as fetchExercises, getLogs as fetchLogs } from '../lib/api'
 
 export type Exercise = {
   id: string
@@ -45,9 +45,7 @@ function reducer(state: State, action: Action): State {
       return { ...state, logs: action.logs }
     }
     case 'ADD_LOG': {
-      const logs = [...state.logs, action.log]
-      setJSON('bb_logs', logs)
-      return { ...state, logs }
+      return { ...state, logs: [...state.logs, action.log] }
     }
     default:
       return state
@@ -57,20 +55,52 @@ function reducer(state: State, action: Action): State {
 type StoreContextValue = {
   state: State
   dispatch: React.Dispatch<Action>
+  loading: boolean
 }
 
 const StoreContext = createContext<StoreContextValue | undefined>(undefined)
 
-export function StoreProvider({ children }: { children: React.ReactNode }) {
+export function StoreProvider({ children }: Readonly<{ children: React.ReactNode }>) {
   const [state, dispatch] = useReducer(reducer, initialState)
+  const [loading, setLoading] = useState(true)
 
-  // Load persisted logs once
+  // Load exercises from API (always available)
   useEffect(() => {
-    const logs = getJSON<LogEntry[]>('bb_logs', [])
-    if (logs.length) dispatch({ type: 'SET_LOGS', logs })
+    async function loadExercises() {
+      try {
+        const exercises = await fetchExercises()
+        dispatch({ type: 'INIT_SEED', exercises })
+      } catch (error) {
+        console.error('Failed to load exercises:', error)
+      }
+    }
+    
+    loadExercises()
   }, [])
 
-  const value = useMemo(() => ({ state, dispatch }), [state])
+  // Load logs when user is authenticated
+  useEffect(() => {
+    const token = localStorage.getItem('bb_token')
+    if (!token) {
+      setLoading(false)
+      return
+    }
+
+    async function loadLogs() {
+      try {
+        const logs = await fetchLogs()
+        dispatch({ type: 'SET_LOGS', logs })
+      } catch {
+        // User might not be logged in yet or has no logs
+      } finally {
+        setLoading(false)
+      }
+    }
+    
+    loadLogs()
+  }, [])
+
+  const value = useMemo(() => ({ state, dispatch, loading }), [state, loading])
   return <StoreContext.Provider value={value}>{children}</StoreContext.Provider>
 }
 
