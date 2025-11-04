@@ -16,12 +16,12 @@ app.use(cors({
 }))
 app.use(express.json())
 
-// Clean up expired sessions on startup and every hour
+// Initialize database first
+initDatabase()
+
+// Then clean up expired sessions
 deleteExpiredSessions()
 setInterval(deleteExpiredSessions, 60 * 60 * 1000)
-
-// Initialize database
-initDatabase()
 
 // Routes
 app.use('/api/auth', authRoutes)
