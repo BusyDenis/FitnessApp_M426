@@ -1,5 +1,6 @@
 import { Link, NavLink, Outlet, useNavigate } from 'react-router-dom'
 import { logout } from '../lib/api'
+import { routeTable } from '../routes/routeTable'
 
 export default function Layout() {
   const navigate = useNavigate()
@@ -25,55 +26,24 @@ export default function Layout() {
             
             <div className="flex items-center gap-4">
               <div className="flex gap-1">
-              <NavLink 
-                to="/" 
-                end 
-                className={({isActive}) => 
-                  `px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                    isActive 
-                      ? 'bg-blue-600 text-white shadow-md' 
-                      : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
-                  }`
-                }
-              >
-                Dashboard
-              </NavLink>
-              <NavLink 
-                to="/exercises" 
-                className={({isActive}) => 
-                  `px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                    isActive 
-                      ? 'bg-blue-600 text-white shadow-md' 
-                      : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
-                  }`
-                }
-              >
-                Exercises
-              </NavLink>
-              <NavLink 
-                to="/log" 
-                className={({isActive}) => 
-                  `px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                    isActive 
-                      ? 'bg-blue-600 text-white shadow-md' 
-                      : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
-                  }`
-                }
-              >
-                Log
-              </NavLink>
-              <NavLink 
-                to="/progress" 
-                className={({isActive}) => 
-                  `px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
-                    isActive 
-                      ? 'bg-blue-600 text-white shadow-md' 
-                      : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
-                  }`
-                }
-              >
-                Progress
-              </NavLink>
+                {routeTable
+                  .filter((route) => route.inNav && route.label)
+                  .map((route) => (
+                    <NavLink
+                      key={route.path || 'index'}
+                      to={route.index ? '/' : `/${route.path}`}
+                      end={route.index}
+                      className={({ isActive }) =>
+                        `px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 ${
+                          isActive
+                            ? 'bg-blue-600 text-white shadow-md'
+                            : 'text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                        }`
+                      }
+                    >
+                      {route.label}
+                    </NavLink>
+                  ))}
               </div>
               
               {user && (

@@ -1,6 +1,8 @@
+import { useMemo } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { useStore } from '../state/store'
 import { getExerciseImage } from '../lib/images'
+import { calculate1RM } from '../lib/calculations'
 
 const difficultyConfig = {
   easy: { label: 'Einfach', color: 'bg-green-100 text-green-700 border-green-200' },
@@ -12,6 +14,25 @@ export default function ExerciseDetail() {
   const { id } = useParams()
   const { state } = useStore()
   const ex = state.exercises.find((e) => e.id === id)
+
+  // Calculate 1RM from logs for this exercise (must be before early return)
+  const exerciseLogs = useMemo(() => {
+    if (!id) return []
+    return state.logs.filter(log => log.exerciseId === id)
+  }, [state.logs, id])
+
+  const estimated1RM = useMemo(() => {
+    if (exerciseLogs.length === 0) return null
+    // Find the highest 1RM from all sets
+    let max1RM = 0
+    for (const log of exerciseLogs) {
+      for (const set of log.sets) {
+        const oneRM = calculate1RM(set.weightKg, set.reps)
+        if (oneRM > max1RM) max1RM = oneRM
+      }
+    }
+    return Math.round(max1RM * 10) / 10
+  }, [exerciseLogs])
 
   if (!ex) {
     return (
@@ -97,6 +118,17 @@ export default function ExerciseDetail() {
               </div>
             </div>
           </div>
+
+          {/* 1RM Calculator */}
+          {estimated1RM && (
+            <div className="bg-gradient-to-br from-green-500 to-green-600 rounded-xl p-6 text-white shadow-lg">
+              <div className="text-sm font-medium text-green-100 mb-1">Geschätzter 1RM</div>
+              <div className="text-3xl font-bold mb-2">{estimated1RM} kg</div>
+              <div className="text-xs text-green-100">
+                Basierend auf {exerciseLogs.length} {exerciseLogs.length === 1 ? 'Workout' : 'Workouts'}
+              </div>
+            </div>
+          )}
 
           {/* Action Button */}
           <Link 

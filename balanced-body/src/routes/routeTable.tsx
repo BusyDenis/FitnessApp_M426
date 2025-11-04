@@ -6,6 +6,8 @@ import {
     Log,
     Progress,
     CreateRoutine,
+    BMI,
+    TDEE,
 } from './'
 
 export type AppRoute = {
@@ -23,6 +25,8 @@ export const routeTable: AppRoute[] = [
     { path: 'log', element: <Log />, label: 'Log', inNav: true },
     { path: 'progress', element: <Progress />, label: 'Progress', inNav: true },
     { path: 'routines/create', element: <CreateRoutine />, label: 'Routines', inNav: true },
+    { path: 'bmi', element: <BMI />, label: 'BMI', inNav: true },
+    { path: 'tdee', element: <TDEE />, label: 'Kalorien', inNav: true },
 ]
 
 export const notFoundRoute: AppRoute = {

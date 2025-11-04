@@ -1,4 +1,4 @@
-import { useMemo } from 'react'
+import { useMemo, useState, useEffect } from 'react'
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts'
 import { useStore } from '../state/store'
 import { aggregateWeeklySets, findUndertrained } from '../logic/balance'
@@ -6,6 +6,7 @@ import { suggestExercises } from '../logic/planner'
 import { getWeekStart } from '../lib/date'
 import { Link } from 'react-router-dom'
 import { heroImage } from '../lib/images'
+import { calculateBMI, classifyBMI, calculateTDEE } from '../lib/calculations'
 
 export default function Dashboard() {
   const { state, loading } = useStore()
@@ -17,6 +18,31 @@ export default function Dashboard() {
     if (under.length === 0 || state.exercises.length === 0) return {}
     return suggestExercises(under, state.exercises)
   }, [under, state.exercises])
+
+  // Load user stats from localStorage (if available)
+  const [bmiData, setBmiData] = useState<{ height: number; weight: number } | null>(null)
+  const [tdeeData, setTdeeData] = useState<{ height: number; weight: number; age: number; gender: 'male' | 'female'; activity: number } | null>(null)
+
+  useEffect(() => {
+    // Try to load BMI data
+    const bmiStr = localStorage.getItem('bb_bmi_current')
+    if (bmiStr) {
+      try {
+        setBmiData(JSON.parse(bmiStr))
+      } catch {
+        // Ignore parse errors
+      }
+    }
+    // Try to load TDEE data
+    const tdeeStr = localStorage.getItem('bb_tdee_current')
+    if (tdeeStr) {
+      try {
+        setTdeeData(JSON.parse(tdeeStr))
+      } catch {
+        // Ignore parse errors
+      }
+    }
+  }, [])
   
   if (loading) {
     return (
@@ -27,6 +53,9 @@ export default function Dashboard() {
   }
 
   const totalSets = Object.values(agg).reduce((sum, sets) => sum + sets, 0)
+  const bmi = bmiData ? calculateBMI(bmiData.weight, bmiData.height) : null
+  const bmiClassification = bmi ? classifyBMI(bmi) : null
+  const tdee = tdeeData ? calculateTDEE(tdeeData.weight, tdeeData.height, tdeeData.age, tdeeData.gender, tdeeData.activity) : null
 
   return (
     <div className="space-y-8">
@@ -47,7 +76,7 @@ export default function Dashboard() {
       </div>
 
       {/* Stats Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-6">
         <div className="bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl p-6 text-white shadow-lg fade-in">
           <div className="text-3xl font-bold mb-1">{totalSets}</div>
           <div className="text-blue-100 text-sm">Sätze diese Woche</div>
@@ -60,6 +89,38 @@ export default function Dashboard() {
           <div className="text-3xl font-bold mb-1">{data.length}</div>
           <div className="text-green-100 text-sm">Trainierte Muskeln</div>
         </div>
+        
+        {/* BMI Card */}
+        <Link to="/bmi" className="bg-gradient-to-br from-orange-500 to-orange-600 rounded-xl p-6 text-white shadow-lg fade-in hover:shadow-xl transition-all">
+          {bmi ? (
+            <>
+              <div className="text-3xl font-bold mb-1">{bmi.toFixed(1)}</div>
+              <div className="text-orange-100 text-sm">BMI</div>
+              <div className="text-xs text-orange-200 mt-1">{bmiClassification?.category}</div>
+            </>
+          ) : (
+            <>
+              <div className="text-2xl font-bold mb-1">BMI</div>
+              <div className="text-orange-100 text-xs">Berechnen</div>
+            </>
+          )}
+        </Link>
+
+        {/* TDEE Card */}
+        <Link to="/tdee" className="bg-gradient-to-br from-pink-500 to-pink-600 rounded-xl p-6 text-white shadow-lg fade-in hover:shadow-xl transition-all">
+          {tdee ? (
+            <>
+              <div className="text-3xl font-bold mb-1">{tdee}</div>
+              <div className="text-pink-100 text-sm">kcal/Tag</div>
+              <div className="text-xs text-pink-200 mt-1">TDEE</div>
+            </>
+          ) : (
+            <>
+              <div className="text-2xl font-bold mb-1">Kalorien</div>
+              <div className="text-pink-100 text-xs">Berechnen</div>
+            </>
+          )}
+        </Link>
       </div>
 
       {/* Chart Section */}

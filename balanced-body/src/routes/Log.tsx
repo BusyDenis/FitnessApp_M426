@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useStore, type LogEntry } from '../state/store'
 import { createLog as createLogApi } from '../lib/api'
+import { Timer } from '../components/Timer'
 
 function useQuery() {
   const { search } = useLocation()
@@ -144,6 +145,11 @@ export default function Log() {
         >
           + Set hinzufügen
         </button>
+
+        {/* Timer */}
+        <div className="border-t border-slate-200 pt-4">
+          <Timer initialSeconds={90} />
+        </div>
 
         <div className="pt-4 border-t border-slate-200">
           <button 
